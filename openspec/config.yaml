@@ -1,0 +1,58 @@
+# SDD project config — generado por sdd-init (2026-04-22)
+schema: spec-driven
+
+context: |
+  Vite 7, React 19, React Router 7: SPA marketing (RGG HUB), JS/JSX.
+  Build: vite + prerender; deploy Vercel; PostHog opcional (env VITE_*).
+  Nota: existe carpeta histórica `sdd/`; flujo SDD estándar usa `openspec/`.
+
+strict_tdd: true
+
+testing:
+  strict_tdd: true
+  runner:
+    command: npm test
+    frameworks:
+      - Node.js test runner (unit, src/**/*.test.mjs)
+      - Playwright (E2E, e2e/*.ts)
+  layers:
+    unit:
+      available: true
+      tool: node --test
+    integration:
+      available: false
+      tool: —
+    e2e:
+      available: true
+      tool: "@playwright/test"
+  coverage:
+    available: false
+    command: —
+  quality:
+    linter: { available: false, command: — }
+    typecheck: { available: false, command: — }
+    formatter: { available: false, command: — }
+
+rules:
+  proposal:
+    - Include rollback plan for risky changes
+    - Identify affected modules/packages
+  specs:
+    - Use Given/When/Then format for scenarios
+    - Use RFC 2119 keywords (MUST, SHALL, SHOULD, MAY)
+  design:
+    - Include sequence diagrams for complex flows
+    - Document architecture decisions with rationale
+  tasks:
+    - Group tasks by phase (infrastructure, implementation, testing)
+    - Use hierarchical numbering (1.1, 1.2, etc.)
+    - Keep tasks small enough to complete in one session
+  apply:
+    - Follow existing code patterns and conventions
+    - Load relevant coding skills for the project stack
+  verify:
+    test_command: npm test
+    build_command: npm run build
+    coverage_threshold: 0
+  archive:
+    - Warn before merging destructive deltas (large removals)

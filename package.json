@@ -1,0 +1,26 @@
+{
+  "name": "rgg-capital-landing",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build && node scripts/prerender.mjs",
+    "preview": "vite preview --host 127.0.0.1 --port 4173",
+    "test:unit": "node --test src/shared/scrollSpyResolve.test.mjs",
+    "test:e2e": "playwright test",
+    "test": "npm run test:unit && npm run test:e2e"
+  },
+  "dependencies": {
+    "@posthog/react": "^1.8.1",
+    "posthog-js": "^1.367.0",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "react-router-dom": "^7.14.1"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.59.1",
+    "@vitejs/plugin-react": "^4.2.0",
+    "vite": "^7.3.2"
+  }
+}
