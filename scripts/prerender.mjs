@@ -63,7 +63,7 @@ try {
 const logoFile = assetsList.find(
   (f) => /^logo-/i.test(f) && /\.(jpg|jpeg|png|webp|avif)$/i.test(f)
 );
-const ogImage = logoFile ? `${baseUrl}/assets/${logoFile}` : `${baseUrl}/favicon.svg`;
+const ogImage = logoFile ? `${baseUrl}/assets/${logoFile}` : `${baseUrl}/favicon.ico`;
 
 const orgLd = buildOrganizationJsonLd(hub, baseUrl);
 const siteLd = buildWebSiteJsonLd(baseUrl);

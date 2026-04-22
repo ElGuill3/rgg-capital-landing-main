@@ -50,7 +50,7 @@ const logoModules = import.meta.glob("../assets/*.{jpg,jpeg,png,webp,avif,svg}",
 
 function getOgImageAbsolute(baseUrl) {
   const rel = Object.values(logoModules)[0];
-  if (!rel) return `${baseUrl}/favicon.svg`;
+  if (!rel) return `${baseUrl}/favicon.ico`;
   const path = rel.startsWith("/") ? rel : `/${rel}`;
   return `${baseUrl}${path}`;
 }

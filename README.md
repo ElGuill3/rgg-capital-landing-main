@@ -33,7 +33,7 @@ Copia `.env.example` a `.env` y ajusta:
 
 ## Deploy (Vercel)
 
-El repo incluye **`vercel.json`**: rewrites `/(.*)` → `/index.html` para que React Router resuelva rutas cliente (p. ej. `/cualquier-ruta`). Los archivos estáticos en `dist` (p. ej. `/assets/*`, `/favicon.svg`) siguen sirviéndose con prioridad sobre el rewrite.
+El repo incluye **`vercel.json`**: rewrites `/(.*)` → `/index.html` para que React Router resuelva rutas cliente (p. ej. `/cualquier-ruta`). Los archivos estáticos en `dist` (p. ej. `/assets/*`, `/favicon.ico`) siguen sirviéndose con prioridad sobre el rewrite.
 
 1. Conecta este repositorio en [Vercel](https://vercel.com) como proyecto nuevo.
 2. **Build command:** `npm run build`
