@@ -56,6 +56,158 @@ body {
   border-radius: 4px;
 }
 
+/* ── Mobile nav overlay (full-screen hamburger menu) ── */
+.nav-overlay-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 99;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+
+.nav-overlay-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.nav-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 101;
+  background: var(--rgg-page-bg, #1a1718);
+  padding: clamp(16px, 5vw, 32px);
+  padding-top: calc(clamp(16px, 5vw, 32px) + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(clamp(16px, 5vw, 32px) + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  transform: translateY(-100%);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.2s ease, visibility 0.2s ease;
+}
+
+.nav-overlay.is-open {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
+
+.nav-overlay__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: clamp(24px, 6vw, 48px);
+}
+
+.nav-overlay__close {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 8px;
+  color: var(--rgg-link-muted, #9ca3af);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: color 0.2s ease;
+}
+
+.nav-overlay__close:hover {
+  color: var(--rgg-link-accent, #f59e0b);
+}
+
+.nav-overlay__items {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.nav-overlay__pillar-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+  text-align: left;
+  padding: clamp(12px, 3vw, 18px) clamp(8px, 2vw, 16px);
+  font-family: inherit;
+  font-size: clamp(18px, 5vw, 28px);
+  font-weight: 700;
+  font-family: var(--font-heading, inherit);
+  letter-spacing: 0.03em;
+  color: var(--rgg-link-muted, #9ca3af);
+  border-radius: 12px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-overlay__pillar-btn:hover,
+.nav-overlay__pillar-btn.is-active {
+  color: var(--rgg-link-accent, #f59e0b);
+  background: rgba(245, 158, 11, 0.08);
+}
+
+.nav-overlay__subitems {
+  display: flex;
+  flex-direction: column;
+  padding-left: clamp(12px, 3vw, 20px);
+  gap: 2px;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.25s ease;
+}
+
+.nav-overlay__subitems.is-open {
+  max-height: 400px;
+}
+
+.nav-overlay__sublink {
+  display: block;
+  padding: clamp(8px, 2vw, 12px) clamp(8px, 2vw, 16px);
+  font-family: var(--font-mono, monospace);
+  font-size: clamp(13px, 3.5vw, 16px);
+  color: var(--rgg-link-muted, #9ca3af);
+  text-decoration: none;
+  border-left: 3px solid transparent;
+  border-radius: 0 8px 8px 0;
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.nav-overlay__sublink:hover,
+.nav-overlay__sublink.is-active {
+  color: var(--rgg-link-accent, #f59e0b);
+  border-left-color: rgba(245, 158, 11, 0.5);
+  background: rgba(245, 158, 11, 0.06);
+}
+
+/* ── Responsive nav: show accordion on mobile, dropdown on desktop ── */
+/* Note: accordion visibility is controlled via JS isMenuOpen state + inline style */
+.nav-dropdown {
+  display: none;
+}
+
+/* Mobile: restore top gap so navbar feels floating */
+.navRgg__inner {
+  margin-top: clamp(6px, 1.5vw, 10px) !important;
+}
+
+/* Tablet and up: show dropdown, hide accordion */
+/* JS isMenuOpen state controls mobile accordion visibility via inline style */
+@media (min-width: 768px) {
+  .nav-accordion {
+    display: none !important;
+  }
+  .nav-dropdown {
+    display: flex;
+  }
+}
+
 /* Hover en botones de pilar del hub (sin href) */
 .navRgg__link:not([href]):not([aria-current="location"]):hover {
   color: var(--rgg-link-accent) !important;

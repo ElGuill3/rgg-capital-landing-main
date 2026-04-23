@@ -69,15 +69,15 @@ export function NavDropdown({ pillar, label, subLabels, isActivePillar, activeCh
         className="navRgg__link"
         onClick={handleTriggerClick}
         style={{
-          fontSize: 12,
+          fontSize: "clamp(11px, 1.5vw, 13px)",
           fontWeight: 600,
           fontFamily: t.fontHeading,
-          letterSpacing: "0.05em",
+          letterSpacing: "0.04em",
           color: isActivePillar ? t.accent : t.textMuted,
           opacity: isActivePillar ? 1 : 0.7,
           background: "none",
           border: "none",
-          padding: "4px 0",
+          padding: "clamp(4px, 1vw, 6px) clamp(8px, 1.5vw, 14px)",
           cursor: "pointer",
           whiteSpace: "nowrap",
           transition: "color 0.3s ease, opacity 0.3s ease",
