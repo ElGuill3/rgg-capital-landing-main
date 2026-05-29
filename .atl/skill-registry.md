@@ -6,20 +6,18 @@
 
 | Trigger | Skill | Path |
 |---------|-------|------|
-| When creating a pull request, opening a PR, or preparing changes for review. | branch-pr | `C:\Users\guill\.codex\skills\branch-pr\SKILL.md` |
-| When creating a GitHub issue, reporting a bug, or requesting a feature. | issue-creation | `C:\Users\guill\.codex\skills\issue-creation\SKILL.md` |
-| When writing Go tests, using teatest, or adding test coverage. | go-testing | `C:\Users\guill\.codex\skills\go-testing\SKILL.md` |
-| Analytical artifacts, data-heavy deliverables, MCP tool results, .canvas.tsx | canvas | `C:\Users\guill\.cursor\skills-cursor\canvas\SKILL.md` |
-| When user says "judgment day", dual review, juzgar | judgment-day | `C:\Users\guill\.cursor\skills\judgment-day\SKILL.md` |
-| When creating a hook, hooks.json, agent automation | create-hook | `C:\Users\guill\.cursor\skills-cursor\create-hook\SKILL.md` |
-| Cursor rules, RULE.md, .cursor/rules/, AGENTS.md | create-rule | `C:\Users\guill\.cursor\skills-cursor\create-rule\SKILL.md` |
-| New agent skill, SKILL.md authoring | create-skill | `C:\Users\guill\.cursor\skills-cursor\create-skill\SKILL.md` |
-| status line, CLI status bar | statusline | `C:\Users\guill\.cursor\skills-cursor\statusline\SKILL.md` |
-| settings.json, editor preferences | update-cursor-settings | `C:\Users\guill\.cursor\skills-cursor\update-cursor-settings\SKILL.md` |
-| PR merge-ready, CI, review comments | babysit | `C:\Users\guill\.cursor\skills-cursor\babysit\SKILL.md` |
-| skill registry, update skills (this file) | skill-registry | `C:\Users\guill\.codex\skills\skill-registry\SKILL.md` |
+| Create Gentle AI pull requests with issue-first checks. Trigger: creating, opening, or preparing PRs for review. | branch-pr | `/home/guill3/.gemini/skills/branch-pr/SKILL.md` |
+| Trigger: PRs over 400 lines, stacked PRs, review slices. Split oversized changes into chained PRs that protect review focus. | chained-pr | `/home/guill3/.gemini/skills/chained-pr/SKILL.md` |
+| Design docs that reduce cognitive load. Trigger: writing guides, READMEs, RFCs, onboarding, architecture, or review-facing docs. | cognitive-doc-design | `/home/guill3/.gemini/skills/cognitive-doc-design/SKILL.md` |
+| Write warm, direct collaboration comments. Trigger: PR feedback, issue replies, reviews, Slack messages, or GitHub comments. | comment-writer | `/home/guill3/.gemini/skills/comment-writer/SKILL.md` |
+| Trigger: Go tests, go test coverage, Bubbletea teatest, golden files. Apply focused Go testing patterns. | go-testing | `/home/guill3/.gemini/skills/go-testing/SKILL.md` |
+| Create Gentle AI issues with issue-first checks. Trigger: creating GitHub issues, bug reports, or feature requests. | issue-creation | `/home/guill3/.gemini/skills/issue-creation/SKILL.md` |
+| Trigger: judgment day, dual review, adversarial review, juzgar. Run blind dual review, fix confirmed issues, then re-judge. | judgment-day | `/home/guill3/.gemini/skills/judgment-day/SKILL.md` |
+| Trigger: new skills, agent instructions, documenting AI usage patterns. Create LLM-first skills with valid frontmatter. | skill-creator | `/home/guill3/.gemini/skills/skill-creator/SKILL.md` |
+| Trigger: improve skills, audit skills, refactor skills, skill quality. Audit and upgrade existing LLM-first skills. | skill-improver | `/home/guill3/.gemini/skills/skill-improver/SKILL.md` |
+| Plan commits as reviewable work units. Trigger: implementation, commit splitting, chained PRs, or keeping tests and docs with code. | work-unit-commits | `/home/guill3/.gemini/skills/work-unit-commits/SKILL.md` |
 
-**Nota:** rutas bajo el perfil de usuario; en otro entorno, ajustar o repetir `sdd-init` / «update skills».
+**Nota:** rutas bajo el perfil de usuario de Linux; en otro entorno, repetir `sdd-init`.
 
 ## Project Conventions
 
@@ -32,32 +30,39 @@ No se encontró `AGENTS.md`, `.cursorrules` ni `CLAUDE.md` en la raíz del proye
 ## Compact Rules
 
 ### branch-pr
-- Cada PR debe enlazar un issue aprobado (issue-first).
-- Exactamente una etiqueta `type:*` por PR.
-- Los checks automáticos deben pasar antes de merge.
+- Crear Gentle AI pull requests con chequeos previos (issue-first).
+- Cada PR debe tener una etiqueta `type:*`.
 
-### issue-creation
-- Usar plantilla; issues en blanco deshabilitados.
-- Añadir `status:approved` antes de abrir PR (flujo del equipo).
+### chained-pr
+- Dividir cambios de más de 400 líneas en PRs encadenados para proteger el foco de revisión.
+- Organizar el flujo con branches tracker o stacked branches.
+
+### cognitive-doc-design
+- Diseñar documentación de manera clara y jerárquica para guías, READMEs y RFCs, reduciendo la carga cognitiva.
+
+### comment-writer
+- Escribir comentarios de colaboración cálidos, directos y constructivos.
 
 ### go-testing
-- Table-driven tests en Go; teatest para Bubble Tea; golden files cuando aplique.
 - *No aplica al stack Vite/React de este repo salvo que se añada Go.*
 
-### canvas
-- Usar canvas para análisis autónomos, datos denso, tablas sustitutas; leer la skill al editar `.canvas.tsx`.
+### issue-creation
+- Crear Gentle AI issues con chequeos previos (issue-first).
 
 ### judgment-day
-- Lanzar dos reseñas ciegas en paralelo, sintetizar, corregir y re-juzgar (máx. 2 iteraciones).
+- Realizar revisiones ciegas en paralelo, corregir problemas confirmados y volver a juzgar (máx. 2 iteraciones).
 
-### create-hook / create-rule / create-skill
-- Seguir estructura del skill `create-skill` y convenciones de Cursor en cada caso.
+### skill-creator
+- Crear nuevas skills LLM-first siguiendo la estructura de frontmatter y bloques contractuales.
 
-### babysit
-- Bucle: comentarios de PR, conflictos, CI verde, hasta merge-ready.
+### skill-improver
+- Auditar y refinar la observabilidad y los contratos de las skills existentes.
+
+### work-unit-commits
+- Planificar commits como unidades de trabajo atómicas y autocontenidas (manteniendo código, tests y documentación juntos).
 
 ## Registry Metadata
 
 - **Proyecto**: rgg-capital-landing
-- **Generado**: 2026-04-22 (sdd-init)
-- **Fuentes escaneadas**: `~/.codex/skills/`, `~/.cursor/skills/`, `~/.cursor/skills-cursor/` (excl. `sdd-*`, `_shared`, `skill-registry` como fuente lógica)
+- **Generado**: 2026-05-29 (sdd-init)
+- **Fuentes escaneadas**: `/home/guill3/.gemini/skills/` (excl. `sdd-*`, `_shared`, `skill-registry` como fuente lógica)

@@ -38,9 +38,11 @@ export function NavDropdown({ pillar, label, subLabels, isActivePillar, activeCh
     const firstId = pillar.subItems[0]?.id;
     if (firstId) {
       document.getElementById(firstId)?.scrollIntoView({ behavior: "smooth" });
+    } else {
+      document.getElementById(pillar.pillarId)?.scrollIntoView({ behavior: "smooth" });
     }
     setOpen(false);
-  }, [pillar.subItems]);
+  }, [pillar.subItems, pillar.pillarId]);
 
   const handleKeyDown = useCallback((e) => {
     if (e.key === "Escape") {
@@ -54,17 +56,17 @@ export function NavDropdown({ pillar, label, subLabels, isActivePillar, activeCh
   return (
     <div
       style={{ position: "relative" }}
-      onMouseEnter={openPanel}
-      onMouseLeave={scheduleClose}
-      onFocus={openPanel}
-      onBlur={scheduleClose}
+      onMouseEnter={pillar.subItems.length > 0 ? openPanel : undefined}
+      onMouseLeave={pillar.subItems.length > 0 ? scheduleClose : undefined}
+      onFocus={pillar.subItems.length > 0 ? openPanel : undefined}
+      onBlur={pillar.subItems.length > 0 ? scheduleClose : undefined}
       onKeyDown={handleKeyDown}
     >
       <button
         ref={triggerRef}
         type="button"
-        aria-haspopup="true"
-        aria-expanded={open}
+        aria-haspopup={pillar.subItems.length > 0 ? "true" : undefined}
+        aria-expanded={pillar.subItems.length > 0 ? open : undefined}
         aria-current={isActivePillar && !hasActiveChild ? "location" : undefined}
         className="navRgg__link"
         onClick={handleTriggerClick}
@@ -86,63 +88,65 @@ export function NavDropdown({ pillar, label, subLabels, isActivePillar, activeCh
         {label}
       </button>
 
-      <div
-        role="menu"
-        aria-label={label}
-        style={{
-          position: "absolute",
-          top: "calc(100% + 8px)",
-          left: "50%",
-          transform: open
-            ? "translateX(-50%) translateY(0)"
-            : "translateX(-50%) translateY(-6px)",
-          opacity: open ? 1 : 0,
-          pointerEvents: open ? "auto" : "none",
-          transition: "opacity 0.18s ease, transform 0.18s ease",
-          background: t.navGlassBg,
-          backdropFilter: "blur(12px) saturate(150%)",
-          WebkitBackdropFilter: "blur(12px) saturate(150%)",
-          border: `1px solid ${t.border}`,
-          borderRadius: 12,
-          padding: "8px 0",
-          minWidth: 180,
-          zIndex: 10,
-          boxShadow: t.isDark
-            ? "0 8px 32px rgba(0,0,0,0.4)"
-            : "0 8px 24px rgba(83,72,78,0.14)",
-        }}
-      >
-        {pillar.subItems.map((item) => {
-          const isActiveChild = item.id === activeChildId;
-          return (
-            <a
-              key={item.id}
-              href={`#${item.id}`}
-              role="menuitem"
-              className="navRgg__sublink"
-              aria-current={isActiveChild ? "location" : undefined}
-              onClick={() => setOpen(false)}
-              style={{
-                display: "block",
-                padding: "7px 16px",
-                fontFamily: t.fontMono,
-                fontSize: "0.75rem",
-                color: isActiveChild ? t.accent : t.textMuted,
-                opacity: isActiveChild ? 1 : 0.8,
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-                // Active child: subtle left border (muted accent ~45% opacity, does not rival pillar)
-                borderLeft: isActiveChild
-                  ? `3px solid ${hexToRgba(t.accent, 0.45)}`
-                  : "3px solid transparent",
-                transition: "color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease",
-              }}
-            >
-              {subLabels[item.labelKey] ?? item.id}
-            </a>
-          );
-        })}
-      </div>
+      {pillar.subItems.length > 0 && (
+        <div
+          role="menu"
+          aria-label={label}
+          style={{
+            position: "absolute",
+            top: "calc(100% + 8px)",
+            left: "50%",
+            transform: open
+              ? "translateX(-50%) translateY(0)"
+              : "translateX(-50%) translateY(-6px)",
+            opacity: open ? 1 : 0,
+            pointerEvents: open ? "auto" : "none",
+            transition: "opacity 0.18s ease, transform 0.18s ease",
+            background: t.navGlassBg,
+            backdropFilter: "blur(12px) saturate(150%)",
+            WebkitBackdropFilter: "blur(12px) saturate(150%)",
+            border: `1px solid ${t.border}`,
+            borderRadius: 12,
+            padding: "8px 0",
+            minWidth: 180,
+            zIndex: 10,
+            boxShadow: t.isDark
+              ? "0 8px 32px rgba(0,0,0,0.4)"
+              : "0 8px 24px rgba(83,72,78,0.14)",
+          }}
+        >
+          {pillar.subItems.map((item) => {
+            const isActiveChild = item.id === activeChildId;
+            return (
+              <a
+                key={item.id}
+                href={`#${item.id}`}
+                role="menuitem"
+                className="navRgg__sublink"
+                aria-current={isActiveChild ? "location" : undefined}
+                onClick={() => setOpen(false)}
+                style={{
+                  display: "block",
+                  padding: "7px 16px",
+                  fontFamily: t.fontMono,
+                  fontSize: "0.75rem",
+                  color: isActiveChild ? t.accent : t.textMuted,
+                  opacity: isActiveChild ? 1 : 0.8,
+                  textDecoration: "none",
+                  whiteSpace: "nowrap",
+                  // Active child: subtle left border (muted accent ~45% opacity, does not rival pillar)
+                  borderLeft: isActiveChild
+                    ? `3px solid ${hexToRgba(t.accent, 0.45)}`
+                    : "3px solid transparent",
+                  transition: "color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease",
+                }}
+              >
+                {subLabels[item.labelKey] ?? item.id}
+              </a>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

@@ -22,6 +22,8 @@ export function NavAccordion({ navTree, nav, subLabels, activePillarId, activeCh
     const firstId = pillar.subItems[0]?.id;
     if (firstId) {
       document.getElementById(firstId)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    } else {
+      document.getElementById(pillar.pillarId)?.scrollIntoView({ behavior: "smooth", block: "nearest" });
     }
   }, []);
 
@@ -91,71 +93,75 @@ export function NavAccordion({ navTree, nav, subLabels, activePillarId, activeCh
               >
                 {nav[pillar.labelKey]}
               </button>
-              <button
-                id={chevronId}
-                type="button"
-                className="navRgg__link"
-                aria-expanded={isOpen}
-                aria-controls={panelId}
-                aria-label={isOpen ? "Collapse submenu" : "Expand submenu"}
-                onClick={() => togglePanel(pillar)}
-                style={{
-                  flexShrink: 0,
-                  width: 32,
-                  padding: "6px 0",
-                  fontSize: 10,
-                  lineHeight: 1,
-                  color: isActivePillar ? t.accent : t.textMuted,
-                  opacity: isActivePillar ? 0.85 : 0.55,
-                  background: "none",
-                  border: "none",
-                  cursor: "pointer",
-                  transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
-                  transition: "transform 0.2s ease, opacity 0.2s ease",
-                }}
-              >
-                ▾
-              </button>
+              {pillar.subItems.length > 0 && (
+                <button
+                  id={chevronId}
+                  type="button"
+                  className="navRgg__link"
+                  aria-expanded={isOpen}
+                  aria-controls={panelId}
+                  aria-label={isOpen ? "Collapse submenu" : "Expand submenu"}
+                  onClick={() => togglePanel(pillar)}
+                  style={{
+                    flexShrink: 0,
+                    width: 32,
+                    padding: "6px 0",
+                    fontSize: 10,
+                    lineHeight: 1,
+                    color: isActivePillar ? t.accent : t.textMuted,
+                    opacity: isActivePillar ? 0.85 : 0.55,
+                    background: "none",
+                    border: "none",
+                    cursor: "pointer",
+                    transform: isOpen ? "rotate(180deg)" : "rotate(0deg)",
+                    transition: "transform 0.2s ease, opacity 0.2s ease",
+                  }}
+                >
+                  ▾
+                </button>
+              )}
             </div>
 
-            <div
-              id={panelId}
-              role="region"
-              aria-labelledby={labelId}
-              style={{
-                overflow: "hidden",
-                maxHeight: isOpen ? 300 : 0,
-                transition: "max-height 0.25s ease",
-              }}
-            >
-              {pillar.subItems.map((item) => {
-                const isActiveChild = item.id === activeChildId;
-                return (
-                  <a
-                    key={item.id}
-                    href={`#${item.id}`}
-                    className="navRgg__sublink"
-                    aria-current={isActiveChild ? "location" : undefined}
-                    onClick={() => setOpenPillar(null)}
-                    style={{
-                      display: "block",
-                      padding: "5px 0 5px 12px",
-                      fontFamily: t.fontMono,
-                      fontSize: "0.75rem",
-                      color: isActiveChild ? t.accent : t.textMuted,
-                      opacity: isActiveChild ? 1 : 0.75,
-                      textDecoration: "none",
-                      borderLeft: isActiveChild
-                        ? `3px solid ${hexToRgba(t.accent, 0.45)}`
-                        : "3px solid transparent",
-                      transition: "color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease",
-                    }}
-                  >
-                    {subLabels[item.labelKey] ?? item.id}
-                  </a>
-                );
-              })}
-            </div>
+            {pillar.subItems.length > 0 && (
+              <div
+                id={panelId}
+                role="region"
+                aria-labelledby={labelId}
+                style={{
+                  overflow: "hidden",
+                  maxHeight: isOpen ? 300 : 0,
+                  transition: "max-height 0.25s ease",
+                }}
+              >
+                {pillar.subItems.map((item) => {
+                  const isActiveChild = item.id === activeChildId;
+                  return (
+                    <a
+                      key={item.id}
+                      href={`#${item.id}`}
+                      className="navRgg__sublink"
+                      aria-current={isActiveChild ? "location" : undefined}
+                      onClick={() => setOpenPillar(null)}
+                      style={{
+                        display: "block",
+                        padding: "5px 0 5px 12px",
+                        fontFamily: t.fontMono,
+                        fontSize: "0.75rem",
+                        color: isActiveChild ? t.accent : t.textMuted,
+                        opacity: isActiveChild ? 1 : 0.75,
+                        textDecoration: "none",
+                        borderLeft: isActiveChild
+                          ? `3px solid ${hexToRgba(t.accent, 0.45)}`
+                          : "3px solid transparent",
+                        transition: "color 0.2s ease, opacity 0.2s ease, border-color 0.2s ease",
+                      }}
+                    >
+                      {subLabels[item.labelKey] ?? item.id}
+                    </a>
+                  );
+                })}
+              </div>
+            )}
           </div>
         );
       })}

@@ -3,14 +3,9 @@ const CONTACT_EMAIL = "rggcapital5@gmail.com";
 
 const NAV_TREE = [
   {
-    pillarId: "system",
-    labelKey: "system",
-    subItems: [
-      { id: "system-overview", labelKey: "systemOverview" },
-      { id: "system-allocation", labelKey: "systemAllocation" },
-      { id: "system-research", labelKey: "systemResearch" },
-      { id: "system-execution", labelKey: "systemExecution" },
-    ],
+    pillarId: "rgg-team",
+    labelKey: "rggTeam",
+    subItems: [],
   },
   {
     pillarId: "crypto",
@@ -47,6 +42,7 @@ const NAV_TREE = [
     labelKey: "foundation",
     subItems: [
       { id: "foundation-infrastructure", labelKey: "foundationInfrastructure" },
+      { id: "foundation-aws", labelKey: "foundationAws" },
       { id: "foundation-philosophy", labelKey: "foundationPhilosophy" },
     ],
   },
@@ -56,7 +52,7 @@ const en = {
   hub: {
     contactEmail: CONTACT_EMAIL,
     nav: {
-      system: "INNOVATION HUB",
+      rggTeam: "FOUNDING TEAM",
       crypto: "CRYPTO",
       sports: "SPORTS",
       aiLabs: "AI LABS",
@@ -64,10 +60,7 @@ const en = {
     },
     navTree: NAV_TREE,
     navSub: {
-      systemOverview: "0.1 System overview",
-      systemAllocation: "0.2 Allocation",
-      systemResearch: "0.3 Research",
-      systemExecution: "0.4 Execution",
+      rggTeam: "Founding Team",
       cryptoTrading: "1.1 Multi-horizon",
       cryptoStrategy: "1.2 Strategy",
       cryptoOptimization: "1.3 Optimization",
@@ -81,7 +74,8 @@ const en = {
       aiLabsSimulation: "3.3 Simulation",
       aiLabsVision: "3.4 Vision",
       foundationInfrastructure: "4 Core infrastructure",
-      foundationPhilosophy: "5 Philosophy",
+      foundationAws: "5 Powered by AWS",
+      foundationPhilosophy: "6 Philosophy",
     },
     a11y: {
       foundationGroup: "Infrastructure and philosophy",
@@ -92,50 +86,19 @@ const en = {
       description:
         "RGG Capital is an innovation hub building AI-native trading systems, portfolio optimization engines, and next-generation hedge fund infrastructure. Work is grounded in rigorous mathematical modeling, statistical inference, and portfolio optimization — applied across crypto, algorithmic sports betting, and reinforcement learning R&D.",
       ctaPrimary: "Contact",
-      ctaSecondary: "View system",
+      ctaSecondary: "View team",
     },
     sections: {
-      system: {
-        tag: "0.1 System overview",
-        title: "Multi-strategy, multi-asset, AI-native",
-        lead:
-          "We do not optimize individual trades in isolation — we engineer systems that discover, validate, and deploy strategies at scale.",
-        quote: "We don't build strategies; we build systems that generate strategies.",
-        bullets: [
-          "Multi-strategy architecture spanning horizons and signal types",
-          "Multi-asset coverage with unified risk and allocation logic",
-          "AI-native research and execution pipelines end to end",
-        ],
-      },
-      allocation: {
-        tag: "0.2 Capital allocation engine",
-        title: "Portfolio construction",
-        lead: "Capital is routed dynamically across strategies with discipline, not discretion alone.",
-        bullets: [
-          "Cross-strategy allocation and correlation-aware sizing",
-          "Dynamic capital routing as edges and regimes evolve",
-          "Volatility- and drawdown-adaptive exposure",
-        ],
-      },
-      research: {
-        tag: "0.3 Research engine",
-        title: "From idea to deployment",
-        lead: "A closed loop: generate hypotheses, simulate, validate, and ship — tightly coupled to AI Labs.",
-        bullets: [
-          "Structured idea generation and experiment design",
-          "Simulation at scale before capital commitment",
-          "Validation gates and controlled deployment",
-        ],
-      },
-      execution: {
-        tag: "0.4 Execution layer",
-        title: "Where capital meets markets",
-        lead: "Execution is treated as a first-class systems problem: connectivity, latency, and operational resilience.",
-        bullets: [
-          "Digital asset and crypto market access",
-          "Sports betting and probability-market venues",
-          "Derivatives and prediction-market interfaces where applicable",
-        ],
+      rggTeam: {
+        tag: "Founding Team",
+        title: "Founding Team",
+        lead: "RGG Capital was founded by Rodrigo Garcia, together with a group of mathematicians and programmers focused on quantitative trading and system design. The founding team combines expertise in mathematics, actuarial science, software engineering, and algorithmic trading, with a shared focus on building systematic, data-driven strategies for cryptocurrency and digital asset markets. The team's work centers on developing proprietary infrastructure across research, execution, and risk management, enabling the continuous design, testing, and deployment of quantitative trading systems. RGG Capital operates with a strong emphasis on rigor, automation, and scalability, integrating financial engineering with advanced computational methods to build a fully systematic trading framework.",
+        members: [
+          { name: "Rodrigo Garcia Gorostizaga", role: "CEO" },
+          { name: "Mario Jesús Arias Hernández", role: "Quant Developer" },
+          { name: "Guillermo Antonio Jiménez de la Cruz", role: "Quant Trader" },
+          { name: "Emiliano Salgado", role: "AI Researcher" }
+        ]
       },
       pillarCrypto: {
         tag: "1 Crypto fund",
@@ -302,8 +265,20 @@ const en = {
           "Monitoring: PnL, risk dashboards, system health",
         ],
       },
+      rggAws: {
+        tag: "5 Powered by AWS",
+        title: "Powered by AWS",
+        lead: "RGG Capital leverages AWS infrastructure to support the research, execution, and scaling of its quantitative trading systems.",
+        bullets: [
+          "High-performance backtesting and simulation",
+          "Large-scale market data processing",
+          "Secure data storage and pipeline orchestration",
+          "Real-time monitoring and analytics",
+          "Scalable deployment of trading infrastructure",
+        ],
+      },
       philosophy: {
-        tag: "5 Philosophy",
+        tag: "6 Philosophy",
         title: "Systems over strategies",
         lead: "This is where the firm differentiates: we do not optimize individual trades — we design systems that produce them.",
         bullets: [
@@ -322,7 +297,7 @@ const es = {
   hub: {
     contactEmail: CONTACT_EMAIL,
     nav: {
-      system: "INNOVATION HUB",
+      rggTeam: "EQUIPO FUNDADOR",
       crypto: "CRYPTO",
       sports: "SPORTS",
       aiLabs: "AI LABS",
@@ -330,10 +305,7 @@ const es = {
     },
     navTree: NAV_TREE,
     navSub: {
-      systemOverview: "0.1 Visión de sistema",
-      systemAllocation: "0.2 Asignación",
-      systemResearch: "0.3 Investigación",
-      systemExecution: "0.4 Ejecución",
+      rggTeam: "Equipo Fundador",
       cryptoTrading: "1.1 Multi-horizonte",
       cryptoStrategy: "1.2 Estrategia",
       cryptoOptimization: "1.3 Optimización",
@@ -347,7 +319,8 @@ const es = {
       aiLabsSimulation: "3.3 Simulación",
       aiLabsVision: "3.4 Visión",
       foundationInfrastructure: "4 Infraestructura core",
-      foundationPhilosophy: "5 Filosofía",
+      foundationAws: "5 Powered by AWS",
+      foundationPhilosophy: "6 Filosofía",
     },
     a11y: {
       foundationGroup: "Infraestructura y filosofía",
@@ -358,50 +331,19 @@ const es = {
       description:
         "RGG Capital es un hub de innovación que construye sistemas de trading nativos en IA, motores de optimización de cartera e infraestructura de hedge fund de nueva generación. El trabajo se apoya en modelado matemático riguroso, inferencia estadística y optimización de cartera — aplicados en crypto, mercados de apuestas deportivas algorítmicas e I+D en aprendizaje por refuerzo.",
       ctaPrimary: "Contacto",
-      ctaSecondary: "Ver sistema",
+      ctaSecondary: "Ver equipo",
     },
     sections: {
-      system: {
-        tag: "0.1 Visión de sistema",
-        title: "Multi-estrategia, multi-activo, nativo en IA",
-        lead:
-          "No optimizamos trades aislados: diseñamos sistemas que descubren, validan y despliegan estrategias a escala.",
-        quote: "No construimos estrategias aisladas; construimos sistemas que las generan.",
-        bullets: [
-          "Arquitectura multi-estrategia en distintos horizontes y tipos de señal",
-          "Cobertura multi-activo con riesgo y asignación unificados",
-          "Investigación y ejecución de punta a punta, nativas en IA",
-        ],
-      },
-      allocation: {
-        tag: "0.2 Motor de asignación de capital",
-        title: "Construcción de cartera",
-        lead: "El capital se enruta de forma dinámica entre estrategias con disciplina, no solo criterio discrecional.",
-        bullets: [
-          "Asignación cruzada entre estrategias y tamaño consciente de correlaciones",
-          "Enrutamiento dinámico conforme evolucionan regímenes y ventajas",
-          "Exposición adaptativa a volatilidad y drawdown",
-        ],
-      },
-      research: {
-        tag: "0.3 Motor de investigación",
-        title: "De la idea al despliegue",
-        lead: "Ciclo cerrado: hipótesis, simulación, validación y producción — alineado con AI Labs.",
-        bullets: [
-          "Generación estructurada de ideas y diseño experimental",
-          "Simulación a escala antes de comprometer capital",
-          "Validación y despliegue controlado",
-        ],
-      },
-      execution: {
-        tag: "0.4 Capa de ejecución",
-        title: "Donde el capital encuentra los mercados",
-        lead: "La ejecución es un problema de sistemas: conectividad, latencia y resiliencia operativa.",
-        bullets: [
-          "Acceso a mercados de activos digitales y crypto",
-          "Mercados de apuestas deportivas y de probabilidad",
-          "Derivados y mercados de predicción cuando aplica",
-        ],
+      rggTeam: {
+        tag: "Equipo Fundador",
+        title: "Equipo Fundador",
+        lead: "RGG Capital fue fundada por Rodrigo Garcia, junto con un grupo de matemáticos y programadores enfocados en trading cuantitativo y diseño de sistemas. El equipo fundador combina expertise en matemáticas, ciencia actuarial, ingeniería de software y trading algorítmico, con un enfoque compartido en construir estrategias sistemáticas basadas en datos para mercados de criptomonedas y activos digitales. El trabajo del equipo se centra en desarrollar infraestructura propietaria en investigación, ejecución y gestión de riesgo, permitiendo el diseño continuo, prueba y despliegue de sistemas de trading cuantitativo. RGG Capital opera con un fuerte de énfasis en rigor, automatización y escalabilidad, integrando ingeniería financiera con métodos computacionales avanzados para construir un marco de trading completamente sistemático.",
+        members: [
+          { name: "Rodrigo Garcia Gorostizaga", role: "CEO" },
+          { name: "Mario Jesús Arias Hernández", role: "Quant Developer" },
+          { name: "Guillermo Antonio Jiménez de la Cruz", role: "Quant Trader" },
+          { name: "Emiliano Salgado", role: "AI Researcher" }
+        ]
       },
       pillarCrypto: {
         tag: "1 Fondo crypto",
@@ -568,8 +510,20 @@ const es = {
           "Monitoreo: PnL, riesgo, salud del sistema",
         ],
       },
+      rggAws: {
+        tag: "5 Powered by AWS",
+        title: "Powered by AWS",
+        lead: "RGG Capital utiliza infraestructura AWS para apoyar la investigación, ejecución y escalamiento de sus sistemas de trading cuantitativo.",
+        bullets: [
+          "Backtesting y simulación de alto rendimiento",
+          "Procesamiento de datos de mercado a gran escala",
+          "Almacenamiento seguro de datos y orquestación de pipelines",
+          "Monitoreo y análisis en tiempo real",
+          "Despliegue escalable de infraestructura de trading",
+        ],
+      },
       philosophy: {
-        tag: "5 Filosofía",
+        tag: "6 Filosofía",
         title: "Sistemas sobre estrategias sueltas",
         lead: "Aquí se diferencia la firma: no optimizamos trades aislados — diseñamos sistemas que los producen.",
         bullets: [

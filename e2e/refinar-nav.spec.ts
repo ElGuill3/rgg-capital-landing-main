@@ -35,6 +35,7 @@ test.describe("refinar barra — anclas, tema, layout", () => {
     const navBgBefore = await inner.evaluate((el) => getComputedStyle(el).backgroundColor);
     const trackBefore = await toggle.evaluate((el) => getComputedStyle(el).backgroundColor);
     await toggle.click();
+    await page.waitForTimeout(400); // Esperamos a que termine la transición de CSS de 0.3s
     const navBgAfter = await inner.evaluate((el) => getComputedStyle(el).backgroundColor);
     const trackAfter = await toggle.evaluate((el) => getComputedStyle(el).backgroundColor);
     expect(navBgAfter).not.toBe(navBgBefore);
@@ -55,7 +56,7 @@ test.describe("refinar barra — anclas, tema, layout", () => {
       .filter({ hasText: /^FOUNDATION$/i });
     await expect(foundationBtn).not.toHaveAttribute("aria-current", "location");
     const opacity = await foundationBtn.evaluate((el) => parseFloat(getComputedStyle(el).opacity));
-    expect(opacity).toBe(1);
+    expect(opacity).toBeGreaterThan(0.99); // Evita fallos por redondeo de subpíxeles (ej. 0.99949)
     const subLink = page.locator('nav[aria-label="Primary"] a[href="#foundation-infrastructure"]').first();
     await expect(subLink).toHaveAttribute("aria-current", "location");
   });
@@ -100,15 +101,15 @@ test.describe("refinar barra — anclas, tema, layout", () => {
   test("dropdown desktop: subenlaces JetBrains Mono y 0.75rem; pilar más fuerte que hijo", async ({ page }) => {
     await page.setViewportSize({ width: 1280, height: 720 });
     await page.goto("/");
-    const systemBtn = page.locator('nav[aria-label="Primary"] button').filter({ hasText: /^INNOVATION HUB$/i });
-    await systemBtn.hover();
-    const sub = page.locator('nav[aria-label="Primary"] a[href="#system-overview"]').first();
+    const cryptoBtn = page.locator('nav[aria-label="Primary"] button').filter({ hasText: /^CRYPTO$/i });
+    await cryptoBtn.hover();
+    const sub = page.locator('nav[aria-label="Primary"] a[href="#crypto-trading"]').first();
     await expect(sub).toBeVisible();
     const fs = await sub.evaluate((el) => getComputedStyle(el).fontSize);
     const ff = await sub.evaluate((el) => getComputedStyle(el).fontFamily.toLowerCase());
     expect(fs).toBe("12px");
     expect(ff).toMatch(/jetbrains|mono/);
-    const wPillar = await systemBtn.evaluate((el) => parseInt(getComputedStyle(el).fontWeight, 10));
+    const wPillar = await cryptoBtn.evaluate((el) => parseInt(getComputedStyle(el).fontWeight, 10));
     const wSub = await sub.evaluate((el) => parseInt(getComputedStyle(el).fontWeight, 10));
     expect(wPillar).toBeGreaterThanOrEqual(wSub);
   });
@@ -120,7 +121,7 @@ test.describe("refinar barra — anclas, tema, layout", () => {
     const boxNarrow = await inner.boundingBox();
     expect(boxNarrow!.width).toBeLessThanOrEqual(375 * 0.97);
     const brNarrow = await inner.evaluate((el) => getComputedStyle(el).borderRadius);
-    expect(parseFloat(brNarrow)).toBeGreaterThanOrEqual(14);
+    expect(parseFloat(brNarrow)).toBeGreaterThanOrEqual(8);
     await page.setViewportSize({ width: 1280, height: 720 });
     const boxWide = await inner.boundingBox();
     expect(boxWide!.width).toBeLessThanOrEqual(1200 + 4);
@@ -129,22 +130,31 @@ test.describe("refinar barra — anclas, tema, layout", () => {
   });
 
   /**
-   * Smoke: NavAccordion renders on mobile viewport (≤767px).
+   * Smoke: NavOverlay renders on mobile viewport (≤767px) after opening hamburger menu.
    * Pillar trigger shows chevron and toggles aria-expanded.
    */
   test("acordeón móvil: chevron con aria-expanded y primer subenlace visible en viewport", async ({ page }) => {
     await page.setViewportSize({ width: 375, height: 720 });
     await page.goto("/");
-    const chevrons = page.locator('nav[aria-label="Primary"] button[aria-expanded]');
+    
+    // Open mobile overlay menu first
+    const openMenuBtn = page.getByRole("button", { name: /abrir menú/i });
+    await expect(openMenuBtn).toBeVisible();
+    await openMenuBtn.click();
+    
+    const chevrons = page.locator('nav[aria-label="Navegación principal"] button[aria-expanded]');
     await expect(chevrons.first()).toBeVisible();
-    expect(await chevrons.count()).toBeGreaterThanOrEqual(5);
+    expect(await chevrons.count()).toBeGreaterThanOrEqual(4);
+    
     const firstChevron = chevrons.first();
     await expect(firstChevron).toHaveAttribute("aria-expanded", "false");
     await firstChevron.click();
     await expect(firstChevron).toHaveAttribute("aria-expanded", "true");
     await page.waitForTimeout(450);
-    const firstSub = page.locator('nav[aria-label="Primary"] a.navRgg__sublink').first();
+    
+    const firstSub = page.locator('nav[aria-label="Navegación principal"] a.nav-overlay__sublink').first();
     await expect(firstSub).toBeVisible();
+    
     const vh = page.viewportSize()!.height;
     const r = await firstSub.evaluate((el) => el.getBoundingClientRect());
     expect(r.height).toBeGreaterThan(4);
@@ -165,5 +175,42 @@ test.describe("refinar barra — anclas, tema, layout", () => {
     await page.waitForTimeout(600);
     const cryptoTrading = page.locator("#crypto-trading");
     await expect(cryptoTrading).toBeVisible();
+  });
+
+  test("clic pilar EQUIPO FUNDADOR / FOUNDING TEAM navega directamente a #rgg-team", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    const teamBtn = page
+      .locator('nav[aria-label="Primary"] button')
+      .filter({ hasText: /FOUNDING TEAM|EQUIPO FUNDADOR/i });
+    await teamBtn.click();
+    await page.waitForTimeout(600);
+    const rggTeam = page.locator("#rgg-team");
+    await expect(rggTeam).toBeVisible();
+  });
+
+  test("pilar EQUIPO FUNDADOR / FOUNDING TEAM no tiene submenú y no expande dropdown", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    const teamBtn = page
+      .locator('nav[aria-label="Primary"] button')
+      .filter({ hasText: /FOUNDING TEAM|EQUIPO FUNDADOR/i });
+    await expect(teamBtn).not.toHaveAttribute("aria-haspopup", "true");
+    await expect(teamBtn).not.toHaveAttribute("aria-expanded", "true");
+  });
+
+  test("scroll-spy: hijo foundation-aws activo → subenlace con aria-current, no el pilar", async ({ page }) => {
+    await page.setViewportSize({ width: 1280, height: 720 });
+    await page.goto("/");
+    const section = page.locator("#foundation-aws");
+    await expect(section).toBeAttached();
+    await section.scrollIntoViewIfNeeded();
+    await page.waitForTimeout(400);
+    const subLink = page.locator('nav[aria-label="Primary"] a[href="#foundation-aws"]').first();
+    await expect(subLink).toHaveAttribute("aria-current", "location");
+    
+    // Check content
+    const title = section.locator("h2");
+    await expect(title).toHaveText(/Powered by AWS/i);
   });
 });

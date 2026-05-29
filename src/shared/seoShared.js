@@ -23,7 +23,7 @@ export function buildOrganizationJsonLd(hub, baseUrl) {
     "@context": "https://schema.org",
     "@type": "Organization",
     name: "RGG Capital",
-    alternateName: ["RGG Innovation HUB"],
+    alternateName: ["RGG Capital"],
     url: baseUrl,
     description: hub.hero.description,
     contactPoint: [
@@ -41,7 +41,7 @@ export function buildWebSiteJsonLd(baseUrl) {
   return {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    name: "RGG Innovation HUB",
+    name: "RGG Capital",
     url: baseUrl,
     inLanguage: ["en", "es"],
     publisher: {

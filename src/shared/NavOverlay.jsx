@@ -18,6 +18,15 @@ export function NavOverlay({ isOpen, onClose, navTree, nav, subLabels, activePil
     setOpenPillar((prev) => (prev === pillarId ? null : pillarId));
   }, []);
 
+  const handlePillarClick = useCallback((pillarId, subItemsCount) => {
+    if (subItemsCount === 0) {
+      document.getElementById(pillarId)?.scrollIntoView({ behavior: "smooth" });
+      onClose();
+    } else {
+      togglePillar(pillarId);
+    }
+  }, [togglePillar, onClose]);
+
   const handleSublinkClick = useCallback(() => {
     onClose();
   }, [onClose]);
@@ -105,33 +114,35 @@ export function NavOverlay({ isOpen, onClose, navTree, nav, subLabels, activePil
                     color: isActivePillar ? t.accent : t.textMuted,
                     background: isActivePillar ? `${t.accent}15` : "transparent",
                   }}
-                  onClick={() => togglePillar(pillar.pillarId)}
-                  aria-expanded={isOpenPillar}
+                  onClick={() => handlePillarClick(pillar.pillarId, pillar.subItems.length)}
+                  aria-expanded={pillar.subItems.length > 0 ? isOpenPillar : undefined}
                 >
                   {nav[pillar.labelKey]}
                 </button>
 
-                <div className={`nav-overlay__subitems${isOpenPillar ? " is-open" : ""}`}>
-                  {pillar.subItems.map((item) => {
-                    const isActiveChild = item.id === activeChildId;
-                    return (
-                      <a
-                        key={item.id}
-                        href={`#${item.id}`}
-                        className={`nav-overlay__sublink${isActiveChild ? " is-active" : ""}`}
-                        style={{
-                          ...sublinkStyle,
-                          color: isActiveChild ? t.accent : t.textMuted,
-                          borderLeftColor: isActiveChild ? hexToRgba(t.accent, 0.5) : "transparent",
-                          background: isActiveChild ? `${t.accent}12` : "transparent",
-                        }}
-                        onClick={handleSublinkClick}
-                      >
-                        {subLabels[item.labelKey] ?? item.id}
-                      </a>
-                    );
-                  })}
-                </div>
+                {pillar.subItems.length > 0 && (
+                  <div className={`nav-overlay__subitems${isOpenPillar ? " is-open" : ""}`}>
+                    {pillar.subItems.map((item) => {
+                      const isActiveChild = item.id === activeChildId;
+                      return (
+                        <a
+                          key={item.id}
+                          href={`#${item.id}`}
+                          className={`nav-overlay__sublink${isActiveChild ? " is-active" : ""}`}
+                          style={{
+                            ...sublinkStyle,
+                            color: isActiveChild ? t.accent : t.textMuted,
+                            borderLeftColor: isActiveChild ? hexToRgba(t.accent, 0.5) : "transparent",
+                            background: isActiveChild ? `${t.accent}12` : "transparent",
+                          }}
+                          onClick={handleSublinkClick}
+                        >
+                          {subLabels[item.labelKey] ?? item.id}
+                        </a>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             );
           })}
